@@ -17,7 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'login', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'category',
     component: CategoryComponent,
@@ -87,7 +87,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [GuardService],
   },
-  
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // {path: "**", redirectTo: "/dashboard"}
 ];
