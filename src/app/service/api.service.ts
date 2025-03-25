@@ -1,19 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import CryptoJS from 'crypto-js';
-import {Observable} from "rxjs";
-
-
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  authStatuschanged = new EventEmitter<void>();
   private static BASE_URL = 'http://localhost:8080/api';
   private static ENCRYPTION_KEY = 'phegon-dev-inventory';
-
-  authStatusChanged = new EventEmitter<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +22,7 @@ export class ApiService {
     localStorage.setItem(key, encryptedValue);
   }
 
-  // Retrieve from localStorage and Decrypt
+  // Retreive from localStorage and Decrypt
   private getFromStorageAndDecrypt(key: string): any {
     try {
       const encryptedValue = localStorage.getItem(key);
@@ -49,6 +45,22 @@ export class ApiService {
     const token = this.getFromStorageAndDecrypt('token');
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
+    });
+  }
+
+  /***AUTH & USERS API METHODS */
+
+  registerUser(body: any): Observable<any> {
+    return this.http.post(`${ApiService.BASE_URL}/auth/register`, body);
+  }
+
+  loginUser(body: any): Observable<any> {
+    return this.http.post(`${ApiService.BASE_URL}/auth/login`, body);
+  }
+
+  getLoggedInUserInfo(): Observable<any> {
+    return this.http.get(`${ApiService.BASE_URL}/users/current`, {
+      headers: this.getHeader(),
     });
   }
 
@@ -88,7 +100,6 @@ export class ApiService {
   }
 
   /** SUPPLIER API */
-
   addSupplier(body: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/suppliers/add`, body, {
       headers: this.getHeader(),
