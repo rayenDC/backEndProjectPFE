@@ -18,6 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
   {
     path: 'category',
     component: CategoryComponent,
@@ -85,9 +86,10 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [GuardService],
+   // canActivate: [GuardService],
   },
 
+  //   WIDE CARD
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // {path: "**", redirectTo: "/dashboard"}
 ];
