@@ -7,7 +7,7 @@ import { ApiService } from '../service/api.service';
 @Component({
   selector: 'app-add-edit-supplier',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './add-edit-supplier.component.html',
   styleUrl: './add-edit-supplier.component.css',
 })
