@@ -13,6 +13,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TransactionPurchaseComponent} from './transactionPurchase/transactionPurchase.component';
 
 
 export const routes: Routes = [
@@ -77,6 +78,11 @@ export const routes: Routes = [
     canActivate: [GuardService],
   },
   {
+    path: 'transactionPurchase',
+    component: TransactionPurchaseComponent,
+    canActivate: [GuardService],
+  },
+  {
     path: 'transaction/:transactionId',
     component: TransactionDetailsComponent,
     canActivate: [GuardService],
@@ -86,7 +92,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-   // canActivate: [GuardService],
+    canActivate: [GuardService],
   },
 
   //   WIDE CARD

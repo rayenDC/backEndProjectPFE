@@ -10,7 +10,9 @@
 
     <ul class="nav-links">
       <li *ngIf="isAuth()"><a routerLink="/dashboard">Dashbaord</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/transaction">Transactions</a></li>
+      <li *ngIf="isAuth()"><a routerLink="/transaction">Transaction Sales</a></li>
+      <li *ngIf="isAuth()"><a routerLink="/transactionPurchase">Transaction Purchases</a></li>
+
       <li *ngIf="isAdmin()"><a routerLink="/category">Category</a></li>
       <li *ngIf="isAdmin()"><a routerLink="/product">Product</a></li>
       <li *ngIf="isAdmin()"><a routerLink="/supplier">Supplier</a></li>

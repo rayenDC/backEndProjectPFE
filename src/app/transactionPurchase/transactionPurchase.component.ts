@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.css',
 })
-export class TransactionComponent implements OnInit {
+export class TransactionPurchaseComponent implements OnInit {
   constructor(private apiService: ApiService, private router: Router) {}
 
   transactions: any[] = [];
@@ -35,7 +35,7 @@ export class TransactionComponent implements OnInit {
 
         // Filter only sales transactions
         const salesTransactions = allTransactions.filter(
-          (transaction: any) => transaction.transactionType === 'SALE'
+          (transaction: any) => transaction.transactionType === 'PURCHASE'
         );
 
         // Calculate the total pages based on filtered sales transactions
