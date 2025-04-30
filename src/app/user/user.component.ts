@@ -21,6 +21,7 @@ export class UserComponent implements OnInit {
   userRole: string = 'USER'; // default role
   isEditing: boolean = false;
   editingUserId: string | null = null;
+  showEditPopup: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -28,7 +29,6 @@ export class UserComponent implements OnInit {
     this.fetchUsers();
   }
 
-  // FETCH USERS
   fetchUsers(): void {
     this.apiService.getAllUsers().subscribe({
       next: (res: any) => {
@@ -44,7 +44,6 @@ export class UserComponent implements OnInit {
     });
   }
 
-  // ADD USER
   addUser(): void {
     if (
       !this.userName ||
@@ -78,7 +77,6 @@ export class UserComponent implements OnInit {
     });
   }
 
-  // EDIT USER
   editUser(): void {
     if (
       !this.editingUserId ||
@@ -102,6 +100,7 @@ export class UserComponent implements OnInit {
           this.showMessage('User updated successfully');
           this.resetForm();
           this.fetchUsers();
+          this.showEditPopup = false;
         }
       },
       error: (error) => {
@@ -112,7 +111,6 @@ export class UserComponent implements OnInit {
     });
   }
 
-  // HANDLE EDIT
   handleEditUser(user: any): void {
     this.isEditing = true;
     this.editingUserId = user.id;
@@ -120,15 +118,17 @@ export class UserComponent implements OnInit {
     this.userEmail = user.email;
     this.userPhoneNumber = user.phoneNumber;
     this.userRole = user.role;
-    this.userPassword = ''; // Don't auto-fill password for security
+    this.userPassword = '';
+    this.showEditPopup = true;
   }
+
   handleDeleteUser(userId: string): void {
     if (window.confirm('Are you sure you want to delete this user?')) {
       this.apiService.deleteUser(userId).subscribe({
         next: (res: any) => {
           if (res.status === 200) {
             this.showMessage('User deleted successfully');
-            this.fetchUsers(); // Reload users
+            this.fetchUsers();
           }
         },
         error: (error) => {
@@ -140,7 +140,11 @@ export class UserComponent implements OnInit {
     }
   }
 
-  // RESET FORM
+  closePopup(): void {
+    this.showEditPopup = false;
+    this.resetForm();
+  }
+
   resetForm(): void {
     this.isEditing = false;
     this.editingUserId = null;
@@ -151,7 +155,6 @@ export class UserComponent implements OnInit {
     this.userRole = 'USER';
   }
 
-  // SHOW MESSAGE
   showMessage(message: string): void {
     this.message = message;
     setTimeout(() => {
@@ -159,4 +162,3 @@ export class UserComponent implements OnInit {
     }, 4000);
   }
 }
-

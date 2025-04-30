@@ -1,37 +1,38 @@
-<div class="user-management-page">
+<div class="user-page">
   <div *ngIf="message" class="message">{{ message }}</div>
 
   <div class="user-header">
     <h1>User Management</h1>
 
-    <div class="add-user-form">
+    <!-- FORM FOR ADD / EDIT USER -->
+    <div class="add-user">
       <input type="text" [(ngModel)]="userName" placeholder="Name" />
       <input type="email" [(ngModel)]="userEmail" placeholder="Email" />
       <input type="text" [(ngModel)]="userPhoneNumber" placeholder="Phone Number" />
       <input type="password" [(ngModel)]="userPassword" placeholder="Password" />
       <select [(ngModel)]="userRole">
-        <option value="USER">USER</option>
+        
         <option value="ADMIN">ADMIN</option>
         <option value="MANAGER">MANAGER</option>
       </select>
 
       <button *ngIf="!isEditing" (click)="addUser()">Add User</button>
-      <button *ngIf="isEditing" (click)="editUser()">Edit User</button>
+      <button *ngIf="isEditing" (click)="editUser()">Save Changes</button>
     </div>
   </div>
 
-  <!-- Users List -->
+  <!-- DISPLAY USERS -->
   <ul *ngIf="users.length > 0" class="user-list">
     <li *ngFor="let user of users" class="user-item">
       <div>
-        <span><strong>Name:</strong> {{ user.name }}</span><br>
-        <span><strong>Email:</strong> {{ user.email }}</span><br>
-        <span><strong>Phone:</strong> {{ user.phoneNumber }}</span><br>
-        <span><strong>Role:</strong> {{ user.role }}</span>
+        <strong>Name:</strong> {{ user.name }}<br />
+        <strong>Email:</strong> {{ user.email }}<br />
+        <strong>Phone:</strong> {{ user.phoneNumber }}<br />
+        <strong>Role:</strong> {{ user.role }}
       </div>
       <div class="user-actions">
         <button (click)="handleEditUser(user)">Edit</button>
-        <button (click)="handleDeleteUser(user.id!)">Delete</button>
+        <button (click)="handleDeleteUser(user.id)">Delete</button>
       </div>
     </li>
   </ul>
