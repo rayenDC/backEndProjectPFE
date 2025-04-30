@@ -14,6 +14,8 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransactionPurchaseComponent} from './transactionPurchase/transactionPurchase.component';
+import { UserComponent } from './user/user.component'; 
+
 
 
 export const routes: Routes = [
@@ -23,6 +25,12 @@ export const routes: Routes = [
   {
     path: 'category',
     component: CategoryComponent,
+    canActivate: [GuardService],
+    data: { requiresAdmin: true },
+  },
+  {
+    path: 'users',
+    component: UserComponent,
     canActivate: [GuardService],
     data: { requiresAdmin: true },
   },

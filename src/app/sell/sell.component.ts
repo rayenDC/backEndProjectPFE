@@ -32,20 +32,19 @@ export class SellComponent implements OnInit {
       },
       error: (error) => {
         this.showMessage(
-          error?.error?.message ||
-            error?.message ||
-            'Unable to get Products' + error
+          error?.error?.message || error?.message || 'Unable to get Products'
         );
       },
     });
   }
 
-  //Handle form submission
+  // Handle form submission for selling a product
   handleSubmit(): void {
     if (!this.productId || !this.quantity) {
       this.showMessage('Please fill all fields');
       return;
     }
+
     const body = {
       productId: this.productId,
       quantity: parseInt(this.quantity, 10),
@@ -60,11 +59,15 @@ export class SellComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.showMessage(
-          error?.error?.message ||
-            error?.message ||
-            'Unable to sell a product' + error
-        );
+        let errorMessage =
+          error?.error?.message || error?.message || 'Unable to sell product';
+
+        // Check if the error message is "Could not commit JPA transaction" and replace with "Quantity insufficient"
+        if (errorMessage.includes('Could not commit JPA transaction')) {
+          errorMessage = 'Quantity insufficient';
+        }
+
+        this.showMessage(errorMessage); // Show the updated error message
       },
     });
   }
@@ -75,6 +78,7 @@ export class SellComponent implements OnInit {
     this.quantity = '';
   }
 
+  // Show message function
   showMessage(message: string) {
     this.message = message;
     setTimeout(() => {

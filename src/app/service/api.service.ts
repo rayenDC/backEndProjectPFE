@@ -63,6 +63,31 @@ export class ApiService {
       headers: this.getHeader(),
     });
   }
+  
+  /** USERS CRUD ENDPOINTS */
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${ApiService.BASE_URL}/users/all`, {
+      headers: this.getHeader(),
+    });
+  }
+
+  createUser(body: any): Observable<any> {
+    return this.http.post(`${ApiService.BASE_URL}/users/create`, body, {
+      headers: this.getHeader(),
+    });
+  }
+
+  updateUser(id: string, body: any): Observable<any> {
+    return this.http.put(`${ApiService.BASE_URL}/users/update/${id}`, body, {
+      headers: this.getHeader(),
+    });
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${ApiService.BASE_URL}/users/delete/${id}`, {
+      headers: this.getHeader(),
+    });
+  }
 
   /**CATEGOTY ENDPOINTS */
   createCategory(body: any): Observable<any> {
