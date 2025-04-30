@@ -176,3 +176,24 @@
     transform: scale(1);
   }
 }
+.user-actions .delete-btn {
+  background-color: #dc3545; /* Bootstrap-style red */
+}
+
+.user-actions .delete-btn:hover {
+  background-color: #c82333;
+}
+.add-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+}
+

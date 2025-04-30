@@ -3,25 +3,10 @@
 
   <div class="user-header">
     <h1>User Management</h1>
-
-    <!-- FORM FOR ADD / EDIT USER -->
-    <div class="add-user">
-      <input type="text" [(ngModel)]="userName" placeholder="Name" />
-      <input type="email" [(ngModel)]="userEmail" placeholder="Email" />
-      <input type="text" [(ngModel)]="userPhoneNumber" placeholder="Phone Number" />
-      <input type="password" [(ngModel)]="userPassword" placeholder="Password" />
-      <select [(ngModel)]="userRole">
-        
-        <option value="ADMIN">ADMIN</option>
-        <option value="MANAGER">MANAGER</option>
-      </select>
-
-      <button *ngIf="!isEditing" (click)="addUser()">Add User</button>
-      <button *ngIf="isEditing" (click)="editUser()">Save Changes</button>
-    </div>
+    <button (click)="openAddPopup()" class="add-btn">Add User</button>
   </div>
 
-  <!-- DISPLAY USERS -->
+  <!-- User List -->
   <ul *ngIf="users.length > 0" class="user-list">
     <li *ngFor="let user of users" class="user-item">
       <div>
@@ -32,8 +17,31 @@
       </div>
       <div class="user-actions">
         <button (click)="handleEditUser(user)">Edit</button>
-        <button (click)="handleDeleteUser(user.id)">Delete</button>
+        <button class="delete-btn" (click)="handleDeleteUser(user.id)">Delete</button>
       </div>
     </li>
   </ul>
+
+  <!-- Popup Modal -->
+  <div *ngIf="showEditPopup" class="modal-backdrop">
+    <div class="modal-content">
+      <h2>{{ isEditing ? 'Edit User' : 'Add User' }}</h2>
+
+      <input type="text" [(ngModel)]="userName" placeholder="Name" />
+      <input type="email" [(ngModel)]="userEmail" placeholder="Email" />
+      <input type="text" [(ngModel)]="userPhoneNumber" placeholder="Phone Number" />
+      <input type="password" [(ngModel)]="userPassword" placeholder="Password" />
+      <select [(ngModel)]="userRole">
+        <option value="ADMIN">ADMIN</option>
+        <option value="MANAGER">MANAGER</option>
+      </select>
+
+      <div class="modal-buttons">
+        <button (click)="isEditing ? editUser() : addUser()">
+          {{ isEditing ? 'Save Changes' : 'Add User' }}
+        </button>
+        <button (click)="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>

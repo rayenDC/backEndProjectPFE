@@ -18,10 +18,10 @@ export class UserComponent implements OnInit {
   userEmail: string = '';
   userPhoneNumber: string = '';
   userPassword: string = '';
-  userRole: string = 'USER'; // default role
+  userRole: string = 'USER';
   isEditing: boolean = false;
   editingUserId: string | null = null;
-  showEditPopup: boolean = false;
+  showEditPopup: boolean = false; // <-- New
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -54,6 +54,7 @@ export class UserComponent implements OnInit {
       this.showMessage('All fields are required');
       return;
     }
+
     const newUser = {
       name: this.userName,
       email: this.userEmail,
@@ -61,10 +62,12 @@ export class UserComponent implements OnInit {
       password: this.userPassword,
       role: this.userRole,
     };
+
     this.apiService.createUser(newUser).subscribe({
       next: (res: any) => {
         if (res.status === 200) {
-          this.showMessage('User added successfully');
+          const roleLabel = this.capitalizeRole(newUser.role);
+          this.showMessage(`${roleLabel} added successfully`);
           this.resetForm();
           this.fetchUsers();
         }
@@ -87,6 +90,7 @@ export class UserComponent implements OnInit {
       this.showMessage('All fields are required');
       return;
     }
+
     const updatedUser = {
       name: this.userName,
       email: this.userEmail,
@@ -94,13 +98,15 @@ export class UserComponent implements OnInit {
       password: this.userPassword ? this.userPassword : undefined,
       role: this.userRole,
     };
+
     this.apiService.updateUser(this.editingUserId, updatedUser).subscribe({
       next: (res: any) => {
         if (res.status === 200) {
-          this.showMessage('User updated successfully');
+          const roleLabel = this.capitalizeRole(updatedUser.role);
+          this.showMessage(`${roleLabel} updated successfully`);
           this.resetForm();
           this.fetchUsers();
-          this.showEditPopup = false;
+          this.showEditPopup = false; // <-- Hide popup
         }
       },
       error: (error) => {
@@ -119,15 +125,39 @@ export class UserComponent implements OnInit {
     this.userPhoneNumber = user.phoneNumber;
     this.userRole = user.role;
     this.userPassword = '';
+    this.openEditPopup(user);
+  }
+  openAddPopup(): void {
+    this.resetForm();
+    this.isEditing = false;
     this.showEditPopup = true;
   }
 
+  openEditPopup(user: any): void {
+    this.isEditing = true;
+    this.editingUserId = user.id;
+    this.userName = user.name;
+    this.userEmail = user.email;
+    this.userPhoneNumber = user.phoneNumber;
+    this.userRole = user.role;
+    this.userPassword = '';
+    this.showEditPopup = true;
+  }
+
+  closePopup(): void {
+    this.showEditPopup = false;
+    this.resetForm();
+  }
+
   handleDeleteUser(userId: string): void {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+    const user = this.users.find((u) => u.id === userId);
+    const roleLabel = this.capitalizeRole(user?.role || 'User');
+
+    if (window.confirm(`Are you sure you want to delete this ${roleLabel}?`)) {
       this.apiService.deleteUser(userId).subscribe({
         next: (res: any) => {
           if (res.status === 200) {
-            this.showMessage('User deleted successfully');
+            this.showMessage(`${roleLabel} deleted successfully`);
             this.fetchUsers();
           }
         },
@@ -138,11 +168,6 @@ export class UserComponent implements OnInit {
         },
       });
     }
-  }
-
-  closePopup(): void {
-    this.showEditPopup = false;
-    this.resetForm();
   }
 
   resetForm(): void {
@@ -160,5 +185,9 @@ export class UserComponent implements OnInit {
     setTimeout(() => {
       this.message = '';
     }, 4000);
+  }
+
+  capitalizeRole(role: string): string {
+    return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
   }
 }
