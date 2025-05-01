@@ -56,9 +56,26 @@
           <td>{{ transaction.totalPrice }}</td>
           <td>{{ transaction.totalProducts }}</td>
           <td>{{ transaction.createdAt | date : "short" }}</td>
-          <td (click)="navigateTOTransactionsDetailsPage(transaction.id)">
-            <button>View Details</button>
-          </td>
+          <td>
+  <button (click)="navigateTOTransactionsDetailsPage(transaction.id)">
+    View Details
+  </button>
+
+  <!-- QUICK STATUS UPDATE -->
+  <div class="quick-status-update">
+    <label>Status:</label>
+    <select [(ngModel)]="transaction.status">
+      <option value="PENDING">PENDING</option>
+      <option value="PROCESSING">PROCESSING</option>
+      <option value="COMPLETED">COMPLETED</option>
+      <option value="CANCELED">CANCELED</option>
+    </select>
+    <button (click)="quickUpdateStatus(transaction.id, transaction.status)">
+      Update
+    </button>
+  </div>
+</td>
+
         </tr>
       </tbody>
     </table>

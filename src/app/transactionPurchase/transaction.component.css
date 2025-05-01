@@ -59,4 +59,14 @@ th span {
     .transactions-table tr:hover {
     background-color: #e9e9e9;
     }
-    
+    .quick-status-update {
+  margin-top: 5px;
+}
+
+.quick-status-update select,
+.quick-status-update button {
+  margin-top: 4px;
+  margin-right: 4px;
+  font-size: 12px;
+  padding: 3px;
+}

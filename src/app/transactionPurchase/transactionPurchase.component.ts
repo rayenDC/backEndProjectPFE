@@ -100,6 +100,21 @@ export class TransactionPurchaseComponent implements OnInit {
     this.loadTransactions();
   }
 
+  quickUpdateStatus(transactionId: string, status: string): void {
+    this.apiService.updateTransactionStatus(transactionId, status).subscribe({
+      next: () => {
+        this.showMessage('Status updated successfully!');
+        this.loadTransactions(); // Reload list to reflect change
+      },
+      error: (error) => {
+        this.showMessage(
+          error?.error?.message ||
+            error?.message ||
+            'Unable to update status ' + error
+        );
+      },
+    });
+  }
   // SHOW ERROR MESSAGES
   showMessage(message: string) {
     this.message = message;

@@ -59,3 +59,15 @@ th span {
   font-size: 12px;
   color: #17a2b8;
 }
+.quick-status-update {
+  margin-top: 5px;
+}
+
+.quick-status-update select,
+.quick-status-update button {
+  margin-top: 4px;
+  margin-right: 4px;
+  font-size: 12px;
+  padding: 3px;
+}
+
