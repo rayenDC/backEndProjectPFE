@@ -63,7 +63,7 @@ export class ApiService {
       headers: this.getHeader(),
     });
   }
-  
+
   /** USERS CRUD ENDPOINTS */
   getAllUsers(): Observable<any> {
     return this.http.get(`${ApiService.BASE_URL}/users/all`, {
@@ -85,6 +85,34 @@ export class ApiService {
 
   deleteUser(id: string): Observable<any> {
     return this.http.delete(`${ApiService.BASE_URL}/users/delete/${id}`, {
+      headers: this.getHeader(),
+    });
+  }
+
+  deleteClient(id: string) {
+    return this.http.delete(`${ApiService.BASE_URL}/clients/delete/${id}`, {
+      headers: this.getHeader(),
+    });
+  }
+  getAllClients(): Observable<any> {
+    return this.http.get(`${ApiService.BASE_URL}/clients/all`, {
+      headers: this.getHeader(),
+    });
+  }
+  addClient(body: any): Observable<any> {
+    return this.http.post(`${ApiService.BASE_URL}/clients/add`, body, {
+      headers: this.getHeader(),
+    });
+  }
+
+  updateClient(id: string, body: any): Observable<any> {
+    return this.http.put(`${ApiService.BASE_URL}/clients/update/${id}`, body, {
+      headers: this.getHeader(),
+    });
+  }
+
+  getClientById(id: string): Observable<any> {
+    return this.http.get(`${ApiService.BASE_URL}/clients/${id}`, {
       headers: this.getHeader(),
     });
   }

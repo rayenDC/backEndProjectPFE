@@ -15,6 +15,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransactionPurchaseComponent} from './transactionPurchase/transactionPurchase.component';
 import { UserComponent } from './user/user.component'; 
+import { ClientComponent } from './client/client.component';
+import { AddEditClientComponent } from './add-edit-client/add-edit-client.component';
+
 
 
 
@@ -41,6 +44,25 @@ export const routes: Routes = [
     canActivate: [GuardService],
     data: { requiresAdmin: true },
   },
+  {
+    path: 'clients',
+    component: ClientComponent,
+    canActivate: [GuardService],
+    data: { requiresAdmin: true },
+  },
+  {
+    path: 'add-client',
+    component: AddEditClientComponent,
+    canActivate: [GuardService],
+    data: { requiresAdmin: true },
+  },
+  {
+    path: 'edit-client/:clientId',
+    component: AddEditClientComponent,
+    canActivate: [GuardService],
+    data: { requiresAdmin: true },
+  },
+
   {
     path: 'edit-supplier/:supplierId',
     component: AddEditSupplierComponent,

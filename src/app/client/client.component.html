@@ -1,0 +1,20 @@
+<div class="client-page">
+  <p *ngIf="message" class="message">{{ message }}</p>
+
+  <div class="client-header">
+    <h1>Clients</h1>
+    <div class="add-client">
+      <button (click)="navigateToAddClientPage()">Add Client</button>
+    </div>
+  </div>
+
+  <ul class="client-list" *ngIf="clients.length > 0">
+    <li *ngFor="let client of clients" class="client-item" [attr.key]="client.id">
+      <span>{{ client.name }}</span>
+      <div class="client-actions">
+        <button (click)="navigateToEditClientPage(client.id)">Edit</button>
+        <button (click)="handleDeleteClient(client.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>

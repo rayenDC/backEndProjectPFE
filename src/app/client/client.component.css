@@ -1,0 +1,66 @@
+.client-page {
+  padding: 20px;
+}
+
+.client-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  color: #17a2b8;
+  margin-left: 10px;
+  justify-content: space-between;
+}
+
+.client-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #17a2b8;
+}
+
+.add-client button {
+  padding: 12px 12px;
+  background-color: #17a2b8;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.client-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.client-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px;
+  margin: 5px 0;
+  font-size: 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+  border-radius: 10px;
+  color: #2f4f4f;
+  font-weight: 550;
+}
+
+.client-item:hover {
+  background-color: #f9ffff;
+}
+
+.client-actions button {
+  margin-left: 10px;
+  background-color: #17a2b8;
+  font-size: 16px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.client-actions button:last-child {
+  background-color: #dc3545;
+}
