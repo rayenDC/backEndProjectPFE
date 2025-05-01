@@ -23,7 +23,17 @@
     padding: 10px;
     border-radius: 4px;
     }
-     
+      th {
+  cursor: pointer;
+  user-select: none;
+}
+
+th span {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #17a2b8;
+}
+
     .transactions-table {
     width: 100%;
     border-collapse: collapse;

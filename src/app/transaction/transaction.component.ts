@@ -65,6 +65,28 @@ export class TransactionComponent implements OnInit {
     this.valueToSearch = this.searchInput;
     this.loadTransactions();
   }
+  sortBy(field: string, direction: 'asc' | 'desc'): void {
+    const compare = (a: any, b: any): number => {
+      const valueA = a[field];
+      const valueB = b[field];
+
+      if (typeof valueA === 'string') {
+        return direction === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+
+      if (field === 'createdAt') {
+        return direction === 'asc'
+          ? new Date(valueA).getTime() - new Date(valueB).getTime()
+          : new Date(valueB).getTime() - new Date(valueA).getTime();
+      }
+
+      return direction === 'asc' ? valueA - valueB : valueB - valueA;
+    };
+
+    this.transactions.sort(compare);
+  }
 
   // NAVIGATE TO TRANSACTIONS DETAILS PAGE
   navigateTOTransactionsDetailsPage(transactionId: string): void {
