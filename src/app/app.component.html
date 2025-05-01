@@ -1,33 +1,62 @@
 <div class="dashboard-layout">
   <div class="sidebar">
-
-   <h1 class="ims">
-    GSM
-    <!--
-  <img src="assets/logo/logoGSM.png" alt="GSM Logo" style="height: 40px; vertical-align: middle;">-->
-</h1>
-
-
+    <h1 class="ims">GSM</h1>
     <ul class="nav-links">
+      <ul class="nav-links user-actions">
+      
       <li *ngIf="isAuth()"><a routerLink="/dashboard">Dashbaord</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/transaction">Transaction Sales</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/transactionPurchase">Transaction Purchases</a></li>
-  
-      <li *ngIf="isAdmin()"><a routerLink="/category">Category</a></li>
-      <li *ngIf="isAdmin()"><a routerLink="/product">Product</a></li>
-      <li *ngIf="isAdmin()"><a routerLink="/supplier">Supplier</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/purchase">Purchase</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/sell">Sell</a></li>
-      <li *ngIf="isAuth()"><a routerLink="/profile">Profile</a></li>
-      <li *ngIf="isAdmin()"><a routerLink="/users">Manage Users</a></li>
-      <li *ngIf="!isAuth()"><a routerLink="/login">Login</a></li>
-      <li *ngIf="!isAuth()"><a routerLink="/register">Register</a></li>
-      <li *ngIf="isAuth()"><a (click)="logOut()" >Logout</a></li>
+      
+        <li *ngIf="!isAuth()"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isAuth()"><a routerLink="/register">Register</a></li>
+      
+    </ul>
+      <!-- Stock -->
+      <li *ngIf="isAdmin()">
+        <span class="nav-group-title">Stock</span>
+        <ul class="sub-links">
+          <li><a routerLink="/category">Category</a></li>
+          <li><a routerLink="/product">Product</a></li>
+        </ul>
+      </li>
+
+      <!-- Purchase -->
+      <li *ngIf="isAuth()">
+        <span class="nav-group-title">Purchase</span>
+        <ul class="sub-links">
+          <li><a routerLink="/purchase">Purchase</a></li>
+          <li><a routerLink="/transactionPurchase">Transaction Purchases</a></li>
+          <li *ngIf="isAdmin()"><a routerLink="/supplier">Supplier</a></li>
+        </ul>
+      </li>
+
+      <!-- Sales -->
+      <li *ngIf="isAuth()">
+        <span class="nav-group-title">Sales</span>
+        <ul class="sub-links">
+          <li><a routerLink="/sell">Sell</a></li>
+          <li><a routerLink="/transaction">Transaction Sales</a></li>
+           <li><a routerLink="/client">Client</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- User Actions Section (visually separated) -->
+    <ul class="nav-links user-actions">
+      <li *ngIf="isAdmin()">
+        <a routerLink="/users">Manage Users</a>
+      </li>
+      <li *ngIf="isAuth()">
+        <a routerLink="/profile">Profile</a>
+      </li>
+
+      <li *ngIf="isAuth()">
+        <a (click)="logOut()" class="logout-link">Logout</a>
+      </li>
     </ul>
   </div>
 
-  <!-- MAIN CONTENT Area-->
-   <div class="main-content">
-      <router-outlet></router-outlet>
-   </div>
+  <!-- MAIN CONTENT Area -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
