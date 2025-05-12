@@ -117,32 +117,40 @@ export class AddEditProductComponent implements OnInit {
       this.apiService.updateProduct(formData).subscribe({
         next: (res: any) => {
           if (res.status === 200) {
-            this.showMessage('product updated successfully');
+            this.showMessage('Product updated successfully');
             this.router.navigate(['/product']);
           }
         },
         error: (error) => {
-          this.showMessage(
-            error?.error?.message ||
-              error?.message ||
-              'Unable to update a product' + error
-          );
+          const errorMessage = error?.error?.message || error?.message || '';
+          if (
+            errorMessage.includes('Duplicate entry') ||
+            error.status === 409
+          ) {
+            this.showMessage('Product with this SKU already exists.');
+          } else {
+            this.showMessage('Unable to update product. ' + errorMessage);
+          }
         },
       });
     } else {
       this.apiService.addProduct(formData).subscribe({
         next: (res: any) => {
           if (res.status === 200) {
-            this.showMessage('Product Saved successfully');
+            this.showMessage('Product saved successfully');
             this.router.navigate(['/product']);
           }
         },
         error: (error) => {
-          this.showMessage(
-            error?.error?.message ||
-              error?.message ||
-              'Unable to save a product' + error
-          );
+          const errorMessage = error?.error?.message || error?.message || '';
+          if (
+            errorMessage.includes('Duplicate entry') ||
+            error.status === 409
+          ) {
+            this.showMessage('Product with this SKU already exists.');
+          } else {
+            this.showMessage('Unable to save product. ' + errorMessage);
+          }
         },
       });
     }
