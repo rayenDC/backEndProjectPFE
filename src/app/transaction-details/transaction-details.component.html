@@ -48,6 +48,15 @@
             <p>Name: {{transaction.supplier.name}}</p>
             <p>Address: {{transaction.supplier.address}}</p>
          </div>
+         <!-- CLIENT ASSOCIATED WITH THE TRANSACTION -->
+<div *ngIf="transaction.client" class="section-card">
+  <h2>Client Information</h2>
+  <p>Name: {{ transaction.client.name }}</p>
+  <p>Email: {{ transaction.client.email }}</p>
+  <p>Phone Number: {{ transaction.client.phoneNumber }}</p>
+</div>
+
+
 
          <!-- UPDATE TRANSACTION -->
          <div class="section-card transaction-staus-update">

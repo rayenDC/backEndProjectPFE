@@ -57,9 +57,11 @@
           <td>{{ transaction.totalProducts }}</td>
           <td>{{ transaction.createdAt | date : "short" }}</td>
           <td>
-  <button (click)="navigateTOTransactionsDetailsPage(transaction.id)">
-    View Details
-  </button>
+           
+  <button (click)="navigateTOTransactionsDetailsPage(transaction.id)" class="btn btn-link p-0" title="View Details">
+  <i class="fas fa-eye"></i>
+</button>
+
 
   <!-- QUICK STATUS UPDATE -->
   <div class="quick-status-update">

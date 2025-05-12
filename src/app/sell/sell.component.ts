@@ -18,9 +18,12 @@ export class SellComponent implements OnInit {
   description: string = '';
   quantity: string = '';
   message: string = '';
+  clients: any[] = [];
+  clientId: string = '';
 
   ngOnInit(): void {
     this.fetchProducts();
+    this.fetchClients();
   }
 
   fetchProducts(): void {
@@ -40,13 +43,14 @@ export class SellComponent implements OnInit {
 
   // Handle form submission for selling a product
   handleSubmit(): void {
-    if (!this.productId || !this.quantity) {
+    if (!this.productId || !this.clientId || !this.quantity) {
       this.showMessage('Please fill all fields');
       return;
     }
 
     const body = {
       productId: this.productId,
+      clientId: this.clientId, // ✅ You add this line here
       quantity: parseInt(this.quantity, 10),
       description: this.description,
     };
@@ -62,12 +66,26 @@ export class SellComponent implements OnInit {
         let errorMessage =
           error?.error?.message || error?.message || 'Unable to sell product';
 
-        // Check if the error message is "Could not commit JPA transaction" and replace with "Quantity insufficient"
         if (errorMessage.includes('Could not commit JPA transaction')) {
           errorMessage = 'Quantity insufficient';
         }
 
-        this.showMessage(errorMessage); // Show the updated error message
+        this.showMessage(errorMessage);
+      },
+    });
+  }
+
+  fetchClients(): void {
+    this.apiService.getAllClients().subscribe({
+      next: (res: any) => {
+        if (res.status === 200) {
+          this.clients = res.clients;
+        }
+      },
+      error: (error) => {
+        this.showMessage(
+          error?.error?.message || error?.message || 'Unable to get clients'
+        );
       },
     });
   }
@@ -75,6 +93,7 @@ export class SellComponent implements OnInit {
   resetForm(): void {
     this.productId = '';
     this.description = '';
+    this.clientId = '';
     this.quantity = '';
   }
 
