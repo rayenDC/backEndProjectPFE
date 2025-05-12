@@ -80,18 +80,45 @@ export class AddEditSupplierComponent implements OnInit {
         },
       });
     } else {
-      this.apiService.addSupplier(supplierData).subscribe({
+      // Check if supplier already exists before adding
+      this.apiService.getAllSuppliers().subscribe({
         next: (res: any) => {
           if (res.status === 200) {
-            this.showMessage('Supplier Added successfully');
-            this.router.navigate(['/supplier']);
+            const existingSupplier = res.suppliers.find(
+              (supplier: any) =>
+                supplier.name.toLowerCase() === supplierData.name.toLowerCase()
+            );
+
+            if (existingSupplier) {
+              this.showMessage(
+                `Error: Supplier "${supplierData.name}" already exists.`
+              );
+              return;
+            }
+
+            // If no existing supplier found, proceed to add
+            this.apiService.addSupplier(supplierData).subscribe({
+              next: (res: any) => {
+                if (res.status === 200) {
+                  this.showMessage('Supplier added successfully');
+                  this.router.navigate(['/supplier']);
+                }
+              },
+              error: (error) => {
+                this.showMessage(
+                  error?.error?.message ||
+                    error?.message ||
+                    'Unable to add supplier' + error
+                );
+              },
+            });
           }
         },
         error: (error) => {
           this.showMessage(
             error?.error?.message ||
               error?.message ||
-              'Unable to Add supplier' + error
+              'Failed to verify existing suppliers' + error
           );
         },
       });
