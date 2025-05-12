@@ -76,18 +76,45 @@ export class AddEditClientComponent implements OnInit {
         },
       });
     } else {
-      this.apiService.addClient(this.formData).subscribe({
+      // Check if client already exists before adding
+      this.apiService.getAllClients().subscribe({
         next: (res: any) => {
           if (res.status === 200) {
-            this.showMessage('Client added successfully');
-            this.router.navigate(['/clients']);
+            const existingClient = res.clients.find(
+              (client: any) =>
+                client.name.toLowerCase() === this.formData.name.toLowerCase()
+            );
+
+            if (existingClient) {
+              this.showMessage(
+                `Error: Client "${this.formData.name}" already exists.`
+              );
+              return;
+            }
+
+            // If no existing client found, proceed to add
+            this.apiService.addClient(this.formData).subscribe({
+              next: (res: any) => {
+                if (res.status === 200) {
+                  this.showMessage('Client added successfully');
+                  this.router.navigate(['/clients']);
+                }
+              },
+              error: (error) => {
+                this.showMessage(
+                  error?.error?.message ||
+                    error?.message ||
+                    'Failed to add client' + error
+                );
+              },
+            });
           }
         },
         error: (error) => {
           this.showMessage(
             error?.error?.message ||
               error?.message ||
-              'Failed to add client' + error
+              'Failed to verify existing clients' + error
           );
         },
       });
